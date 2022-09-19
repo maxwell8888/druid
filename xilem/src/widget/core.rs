@@ -321,6 +321,10 @@ impl Pod {
     pub fn height_flexibility(&self) -> f64 {
         self.state.max_size.height - self.state.min_size.height
     }
+    
+    pub fn width_flexibility(&self) -> f64 {
+        self.state.max_size.width - self.state.min_size.width
+    }
 
     /// The returned value is in the coordinate space of the parent that
     /// owns this pod.

@@ -23,6 +23,7 @@ pub mod scroll_view;
 pub mod text;
 pub mod use_state;
 pub mod vstack;
+pub mod hstack;
 
 use std::{
     any::Any,
