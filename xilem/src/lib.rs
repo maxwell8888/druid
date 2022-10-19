@@ -37,5 +37,8 @@ pub use view::memoize::Memoize;
 pub use view::scroll_view::scroll_view;
 pub use view::vstack::v_stack;
 pub use view::View;
-pub use widget::align::{AlignmentAxis, AlignmentProxy, HorizAlignment, VertAlignment};
+pub use widget::align::{
+    AlignmentAxis, AlignmentProxy, Bottom, Center, HorizAlignment, Leading, Top, Trailing,
+    VertAlignment,
+};
 pub use widget::Widget;

@@ -14,12 +14,19 @@
 
 use std::{any::Any, marker::PhantomData};
 
-use crate::{event::EventResult, id::Id, view_seq::ViewSequence, widget::WidgetTuple};
+use crate::{
+    event::EventResult,
+    id::Id,
+    view_seq::ViewSequence,
+    widget::{align::SingleAlignment, WidgetTuple},
+    Center, HorizAlignment,
+};
 
 use super::{Cx, View};
 
 pub struct VStack<T, A, VT: ViewSequence<T, A>> {
     children: VT,
+    cross_axis_alignment: SingleAlignment,
     phantom: PhantomData<(T, A)>,
 }
 
@@ -30,7 +37,17 @@ pub fn v_stack<T, A, VT: ViewSequence<T, A>>(children: VT) -> VStack<T, A, VT> {
 impl<T, A, VT: ViewSequence<T, A>> VStack<T, A, VT> {
     pub fn new(children: VT) -> Self {
         let phantom = Default::default();
-        VStack { children, phantom }
+        let cross_axis_alignment = SingleAlignment::from_horiz(&Center);
+        VStack {
+            children,
+            cross_axis_alignment,
+            phantom,
+        }
+    }
+
+    pub fn cross_axis_alignment(mut self, align: &impl HorizAlignment) -> Self {
+        self.cross_axis_alignment = SingleAlignment::from_horiz(align);
+        self
     }
 }
 
@@ -44,7 +61,7 @@ where
 
     fn build(&self, cx: &mut Cx) -> (Id, Self::State, Self::Element) {
         let (id, (state, elements)) = cx.with_new_id(|cx| self.children.build(cx));
-        let column = crate::widget::vstack::VStack::new(elements);
+        let column = crate::widget::vstack::VStack::new(elements, self.cross_axis_alignment);
         (id, state, column)
     }
 
