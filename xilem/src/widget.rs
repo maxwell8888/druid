@@ -16,13 +16,13 @@ pub mod align;
 pub mod button;
 mod contexts;
 mod core;
+pub mod hstack;
 pub mod layout_observer;
 pub mod list;
 mod raw_event;
 pub mod scroll_view;
 pub mod text;
 pub mod vstack;
-pub mod hstack;
 
 use std::any::Any;
 use std::ops::{Deref, DerefMut};
@@ -175,4 +175,52 @@ impl_widget_tuple!(7; W0, W1, W2, W3, W4, W5, W6; 0, 1, 2, 3, 4, 5, 6);
 impl_widget_tuple!(8;
     W0, W1, W2, W3, W4, W5, W6, W7;
     0, 1, 2, 3, 4, 5, 6, 7
+);
+impl_widget_tuple!(9;
+    W0, W1, W2, W3, W4, W5, W6, W7, W8;
+    0, 1, 2, 3, 4, 5, 6, 7, 8
+);
+impl_widget_tuple!(10;
+    W0, W1, W2, W3, W4, W5, W6, W7, W8, W9;
+    0, 1, 2, 3, 4, 5, 6, 7, 8, 9
+);
+impl_widget_tuple!(11;
+    W0, W1, W2, W3, W4, W5, W6, W7, W8, W9, W10;
+    0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10
+);
+impl_widget_tuple!(12;
+    W0, W1, W2, W3, W4, W5, W6, W7, W8, W9, W10, W11;
+    0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11
+);
+impl_widget_tuple!(13;
+    W0, W1, W2, W3, W4, W5, W6, W7, W8, W9, W10, W11, W12;
+    0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12
+);
+impl_widget_tuple!(14;
+    W0, W1, W2, W3, W4, W5, W6, W7, W8, W9, W10, W11, W12, W13;
+    0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13
+);
+impl_widget_tuple!(15;
+    W0, W1, W2, W3, W4, W5, W6, W7, W8, W9, W10, W11, W12, W13, W14;
+    0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14
+);
+impl_widget_tuple!(16;
+    W0, W1, W2, W3, W4, W5, W6, W7, W8, W9, W10, W11, W12, W13, W14, W15;
+    0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15
+);
+impl_widget_tuple!(17;
+    W0, W1, W2, W3, W4, W5, W6, W7, W8, W9, W10, W11, W12, W13, W14, W15, W16;
+    0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16
+);
+impl_widget_tuple!(18;
+    W0, W1, W2, W3, W4, W5, W6, W7, W8, W9, W10, W11, W12, W13, W14, W15, W16, W17;
+    0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17
+);
+impl_widget_tuple!(19;
+    W0, W1, W2, W3, W4, W5, W6, W7, W8, W9, W10, W11, W12, W13, W14, W15, W16, W17, W18;
+    0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18
+);
+impl_widget_tuple!(20;
+    W0, W1, W2, W3, W4, W5, W6, W7, W8, W9, W10, W11, W12, W13, W14, W15, W16, W17, W18, W19;
+    0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19
 );
