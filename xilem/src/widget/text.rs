@@ -44,6 +44,11 @@ impl TextWidget {
         self.text = text;
         self.layout = None;
     }
+
+    pub fn set_color(&mut self, color: Color) {
+        self.color = color;
+        self.layout = None;
+    }
 }
 
 impl Widget for TextWidget {
