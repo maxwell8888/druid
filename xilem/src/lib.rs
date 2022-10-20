@@ -36,6 +36,7 @@ pub use view::hstack::h_stack;
 pub use view::layout_observer::LayoutObserver;
 pub use view::list::list;
 pub use view::memoize::Memoize;
+pub use view::optional::{optional, Optional};
 pub use view::scroll_view::scroll_view;
 pub use view::text::TextView;
 pub use view::vstack::v_stack;

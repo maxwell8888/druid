@@ -16,14 +16,15 @@ pub mod adapt;
 pub mod any_view;
 pub mod async_list;
 pub mod button;
+pub mod hstack;
 pub mod layout_observer;
 pub mod list;
 pub mod memoize;
+pub mod optional;
 pub mod scroll_view;
 pub mod text;
 pub mod use_state;
 pub mod vstack;
-pub mod hstack;
 
 use std::{
     any::Any,
