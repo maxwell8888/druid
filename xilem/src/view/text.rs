@@ -14,9 +14,72 @@
 
 use std::any::Any;
 
+use druid_shell::piet::Color;
+
 use crate::{event::EventResult, id::Id};
 
 use super::{Cx, View};
+
+#[derive(PartialEq, Eq)]
+pub struct TextView {
+    text: String,
+    color: Color, // font_size:
+}
+impl TextView {
+    pub fn new(text: &str) -> TextView {
+        TextView {
+            text: text.into(),
+            color: Color::RED,
+        }
+    }
+
+    pub fn color(mut self, color: Color) -> Self {
+        self.color = color;
+        self
+    }
+}
+
+impl<T, A> View<T, A> for TextView {
+    type State = ();
+
+    type Element = crate::widget::text::TextWidget;
+
+    fn build(&self, cx: &mut Cx) -> (Id, Self::State, Self::Element) {
+        let (id, element) = cx.with_new_id(|_| {
+            let mut text_widget = crate::widget::text::TextWidget::new(self.text.clone());
+            text_widget.set_color(self.color.clone());
+            text_widget
+        });
+        (id, (), element)
+    }
+
+    fn rebuild(
+        &self,
+        _cx: &mut Cx,
+        prev: &Self,
+        _id: &mut crate::id::Id,
+        _state: &mut Self::State,
+        element: &mut Self::Element,
+    ) -> bool {
+        if prev != self {
+            element.set_text(self.text.clone());
+            element.set_color(self.color.clone());
+            true
+        } else {
+            false
+        }
+    }
+
+    fn event(
+        &self,
+        _id_path: &[crate::id::Id],
+        _state: &mut Self::State,
+        _event: Box<dyn Any>,
+        _app_state: &mut T,
+    ) -> EventResult<A> {
+        EventResult::Stale
+    }
+}
 
 impl<T, A> View<T, A> for String {
     type State = ();

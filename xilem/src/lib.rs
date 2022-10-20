@@ -27,6 +27,7 @@ mod widget;
 
 pub use app::App;
 pub use app_main::AppLauncher;
+pub use druid_shell::piet::Color;
 pub use view::adapt::Adapt;
 pub use view::any_view::AnyView;
 pub use view::button::button;
@@ -35,6 +36,7 @@ pub use view::layout_observer::LayoutObserver;
 pub use view::list::list;
 pub use view::memoize::Memoize;
 pub use view::scroll_view::scroll_view;
+pub use view::text::TextView;
 pub use view::vstack::v_stack;
 pub use view::View;
 pub use widget::align::{
