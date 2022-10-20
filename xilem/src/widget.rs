@@ -19,6 +19,7 @@ mod core;
 pub mod hstack;
 pub mod layout_observer;
 pub mod list;
+pub mod optional;
 mod raw_event;
 pub mod scroll_view;
 pub mod text;
