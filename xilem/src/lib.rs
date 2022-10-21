@@ -31,6 +31,7 @@ pub use druid_shell::piet::Color;
 pub use view::adapt::Adapt;
 pub use view::any_view::AnyView;
 pub use view::button::button;
+pub use view::container::{container, Container};
 pub use view::hstack::h_stack;
 pub use view::layout_observer::LayoutObserver;
 pub use view::list::list;

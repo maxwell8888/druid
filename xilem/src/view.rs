@@ -15,6 +15,7 @@
 pub mod adapt;
 pub mod any_view;
 pub mod button;
+pub mod container;
 pub mod hstack;
 pub mod layout_observer;
 pub mod list;
