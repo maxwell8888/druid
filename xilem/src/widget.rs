@@ -14,11 +14,13 @@
 
 pub mod align;
 pub mod button;
+pub mod container;
 mod contexts;
 mod core;
 pub mod hstack;
 pub mod layout_observer;
 pub mod list;
+pub mod option;
 pub mod optional;
 mod raw_event;
 pub mod scroll_view;
