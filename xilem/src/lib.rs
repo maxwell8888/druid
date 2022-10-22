@@ -29,7 +29,7 @@ pub use app::App;
 pub use app_main::AppLauncher;
 pub use druid_shell::piet::Color;
 pub use view::adapt::Adapt;
-pub use view::any_view::AnyView;
+pub use view::any_view::{any, AnyView};
 pub use view::button::button;
 pub use view::container::{container, Container};
 pub use view::hstack::h_stack;
