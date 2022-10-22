@@ -141,6 +141,32 @@ impl Widget for Box<dyn AnyWidget> {
     }
 }
 
+pub trait WidgetVec {
+    fn length(&self) -> usize;
+
+    fn widgets_mut(&mut self) -> Vec<&mut dyn AnyWidget>;
+
+    // fn add(&mut self, item: impl AnyWidget);
+}
+impl<T> WidgetVec for Vec<T>
+where
+    T: AnyWidget,
+{
+    fn length(&self) -> usize {
+        self.len()
+    }
+
+    fn widgets_mut(&mut self) -> Vec<&mut dyn AnyWidget> {
+        self.iter_mut()
+            .map(|child| child as &mut dyn AnyWidget)
+            .collect::<Vec<&mut dyn AnyWidget>>()
+    }
+
+    // fn add(&mut self, item: T) {
+    //     self.push(item);
+    // }
+}
+
 pub trait WidgetTuple {
     fn length(&self) -> usize;
 
@@ -167,6 +193,18 @@ macro_rules! impl_widget_tuple {
         }
     }
 }
+
+// impl<W0: AnyWidget, W1: AnyWidget> WidgetTuple for (W0, W1) {
+//     fn length(&self) -> usize {
+//         1
+//     }
+
+//     fn widgets_mut(&mut self) -> Vec<&mut dyn AnyWidget> {
+//         let mut v: Vec<&mut dyn AnyWidget> = Vec::with_capacity(self.length());
+//         v.push(&mut self.0);
+//         v
+//     }
+// }
 
 impl_widget_tuple!(1; W0; 0);
 impl_widget_tuple!(2; W0, W1; 0, 1);
