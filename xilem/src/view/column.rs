@@ -24,21 +24,21 @@ use crate::{
 
 use super::{Cx, View};
 
-pub struct VStack<T, A, VT: ViewSequence<T, A>> {
+pub struct Column<T, A, VT: ViewSequence<T, A>> {
     children: VT,
     cross_axis_alignment: SingleAlignment,
     phantom: PhantomData<fn() -> (T, A)>,
 }
 
-pub fn v_stack<T, A, VT: ViewSequence<T, A>>(children: VT) -> VStack<T, A, VT> {
-    VStack::new(children)
+pub fn v_stack<T, A, VT: ViewSequence<T, A>>(children: VT) -> Column<T, A, VT> {
+    Column::new(children)
 }
 
-impl<T, A, VT: ViewSequence<T, A>> VStack<T, A, VT> {
+impl<T, A, VT: ViewSequence<T, A>> Column<T, A, VT> {
     pub fn new(children: VT) -> Self {
         let phantom = Default::default();
         let cross_axis_alignment = SingleAlignment::from_horiz(&Center);
-        VStack {
+        Column {
             children,
             cross_axis_alignment,
             phantom,
@@ -51,7 +51,7 @@ impl<T, A, VT: ViewSequence<T, A>> VStack<T, A, VT> {
     }
 }
 
-impl<T, A, VT: ViewSequence<T, A>> View<T, A> for VStack<T, A, VT>
+impl<T, A, VT: ViewSequence<T, A>> View<T, A> for Column<T, A, VT>
 where
     VT::Elements: WidgetTuple,
 {

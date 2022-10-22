@@ -16,6 +16,7 @@ pub mod adapt;
 pub mod any_view;
 pub mod async_list;
 pub mod button;
+pub mod column;
 pub mod container;
 pub mod hstack;
 pub mod layout_observer;
