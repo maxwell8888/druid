@@ -143,3 +143,7 @@ impl<T, A> View<T, A> for Box<dyn AnyView<T, A> + Send> {
             .dyn_event(id_path, state.deref_mut(), event, app_state)
     }
 }
+
+pub fn any<T: 'static>(child: impl View<T> + 'static) -> Box<dyn AnyView<T> + Send + 'static> {
+    Box::new(child)
+}
