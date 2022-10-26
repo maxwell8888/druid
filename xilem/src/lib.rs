@@ -22,17 +22,19 @@ mod app_main;
 mod event;
 mod id;
 mod view;
-mod view_seq;
+// mod view_seq;
 mod widget;
 
 pub use app::App;
 pub use app_main::AppLauncher;
-pub use druid_shell::piet::Color;
+pub use druid_shell::kurbo;
+pub use druid_shell::piet;
 pub use view::adapt::Adapt;
 pub use view::any_view::{any, AnyView};
 pub use view::async_list::async_list;
 pub use view::button::button;
 pub use view::container::{container, Container};
+pub use view::diagram::*;
 pub use view::hstack::h_stack;
 pub use view::layout_observer::LayoutObserver;
 pub use view::list::list;
@@ -40,8 +42,11 @@ pub use view::memoize::Memoize;
 pub use view::optional::{optional, Optional};
 pub use view::scroll_view::scroll_view;
 pub use view::text::TextView;
-pub use view::vstack::v_stack;
+// pub use view::vstack::{v_stack, VStack};
+pub use view::vstack;
 pub use view::View;
+// pub use view_seq::ViewSequence;
+pub mod view_seq;
 pub use widget::align::{
     AlignmentAxis, AlignmentProxy, Bottom, Center, HorizAlignment, Leading, Top, Trailing,
     VertAlignment,

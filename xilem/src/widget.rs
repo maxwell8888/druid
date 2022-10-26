@@ -17,6 +17,7 @@ pub mod button;
 pub mod container;
 mod contexts;
 mod core;
+pub mod diagram;
 pub mod hstack;
 pub mod layout_observer;
 pub mod list;
