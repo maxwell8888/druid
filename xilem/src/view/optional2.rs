@@ -73,15 +73,10 @@ where
         state: &mut Self::State,
         element: &mut Self::Element,
     ) -> bool {
-        dbg!("rebuild");
         cx.with_id(*id, |cx| {
-            // let child_element = element
-            //     .child_mut()
-            //     .map(|child| child.downcast_mut().unwrap());
             let changed = if let Some(child_view) = self {
                 if let Some(prev_child_view) = prev {
                     let (cs0, cs1) = &mut state.as_mut().unwrap();
-                    // let cs1 = &mut state.as_mut().unwrap().1;
                     child_view.rebuild(
                         cx,
                         prev_child_view,
@@ -102,9 +97,9 @@ where
                     true
                 }
             } else {
-                let fart: Option<<C as View<T, A>>::Element> = None;
-                element.set_child(fart);
-                false
+                let child: Option<<C as View<T, A>>::Element> = None;
+                element.set_child(child);
+                prev.is_some()
             };
             if changed {
                 if let Some(element_child) = element.child_mut() {
