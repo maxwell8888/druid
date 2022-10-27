@@ -22,6 +22,8 @@ pub mod hstack;
 pub mod layout_observer;
 pub mod list;
 pub mod option;
+pub mod option2;
+pub mod option3;
 pub mod optional;
 mod raw_event;
 pub mod scroll_view;
