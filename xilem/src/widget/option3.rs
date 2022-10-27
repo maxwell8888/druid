@@ -87,11 +87,8 @@ impl Widget for OptionWidget {
     }
 
     fn paint(&mut self, cx: &mut PaintCx) {
-        dbg!("paint my option");
-        dbg!(self.child.is_some());
         cx.with_save(|cx| {
             if let Some(child) = &mut self.child {
-                dbg!("has child");
                 let size = cx.size();
                 cx.clip(size.to_rect());
                 child.paint_raw(cx);

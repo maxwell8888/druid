@@ -45,7 +45,7 @@ pub fn main() {
     let app = App::new(
         AppData {
             count: 0,
-            optional_text: Some("hi".to_string()),
+            optional_text: Some("hi\nfriend".to_string()),
         },
         app_logic,
     );
