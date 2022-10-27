@@ -97,88 +97,88 @@ where
     }
 }
 
-impl<T, A, C: View<T, A>> View<T, A> for Option<C>
-where
-    C::Element: 'static,
-{
-    type State = ();
+// impl<T, A, C: View<T, A>> View<T, A> for Option<C>
+// where
+//     C::Element: 'static,
+// {
+//     type State = ();
 
-    type Element = crate::widget::option::OptionWidget;
+//     type Element = crate::widget::option::OptionWidget;
 
-    fn build(&self, cx: &mut Cx) -> (Id, Self::State, Self::Element) {
-        // let (id, (child_id, child_state, child_element)) = cx.with_new_id(|cx| {
-        //     if let Some(child) = self {
-        //         child.build(cx)
-        //     } else {
-        //         crate::widget::option::OptionWidget::new(None)
-        //     }
-        // });
-        // let mut element = crate::widget::option::OptionWidget::new(child_element);
-        // (id, (child_id, child_state), element)
+//     fn build(&self, cx: &mut Cx) -> (Id, Self::State, Self::Element) {
+//         // let (id, (child_id, child_state, child_element)) = cx.with_new_id(|cx| {
+//         //     if let Some(child) = self {
+//         //         child.build(cx)
+//         //     } else {
+//         //         crate::widget::option::OptionWidget::new(None)
+//         //     }
+//         // });
+//         // let mut element = crate::widget::option::OptionWidget::new(child_element);
+//         // (id, (child_id, child_state), element)
 
-        dbg!("build my option!");
-        let none: Option<C::Element> = None;
-        let (id, element) = cx.with_new_id(|_| crate::widget::option::OptionWidget::new(none));
-        (id, (), element)
-    }
+//         dbg!("build my option!");
+//         let none: Option<C::Element> = None;
+//         let (id, element) = cx.with_new_id(|_| crate::widget::option::OptionWidget::new(none));
+//         (id, (), element)
+//     }
 
-    fn rebuild(
-        &self,
-        cx: &mut Cx,
-        prev: &Self,
-        id: &mut Id,
-        state: &mut Self::State,
-        element: &mut Self::Element,
-    ) -> bool {
-        dbg!("rebuild my option!");
-        // cx.with_id(*id, |cx| {
-        //     // let child_element = element
-        //     //     .child_mut()
-        //     //     .map(|child| child.downcast_mut().unwrap());
-        //     // let child_changed =
-        //     //     self.child
-        //     //         .rebuild(cx, &prev.child, &mut state.0, &mut state.1, child_element);
-        //     // if child_changed {
-        //     //     element.child_mut().request_update();
-        //     // }
+//     fn rebuild(
+//         &self,
+//         cx: &mut Cx,
+//         prev: &Self,
+//         id: &mut Id,
+//         state: &mut Self::State,
+//         element: &mut Self::Element,
+//     ) -> bool {
+//         dbg!("rebuild my option!");
+//         // cx.with_id(*id, |cx| {
+//         //     // let child_element = element
+//         //     //     .child_mut()
+//         //     //     .map(|child| child.downcast_mut().unwrap());
+//         //     // let child_changed =
+//         //     //     self.child
+//         //     //         .rebuild(cx, &prev.child, &mut state.0, &mut state.1, child_element);
+//         //     // if child_changed {
+//         //     //     element.child_mut().request_update();
+//         //     // }
 
-        //     // let show_changed = child_changed || prev.show != self.show;
-        //     // if show_changed {
-        //     //     element.show(self.show);
-        //     // }
+//         //     // let show_changed = child_changed || prev.show != self.show;
+//         //     // if show_changed {
+//         //     //     element.show(self.show);
+//         //     // }
 
-        //     // child_changed || show_changed
+//         //     // child_changed || show_changed
 
-        //     if let Some(child_element) = element.child_mut() {
-        //         if let Some(child) = self {
-        //             child.rebuild(cx, &prev.unwrap(), &mut (), &mut (), child_element);
-        //         }
-        //         child_element.request_update();
-        //     }
-        //     true
-        // })
+//         //     if let Some(child_element) = element.child_mut() {
+//         //         if let Some(child) = self {
+//         //             child.rebuild(cx, &prev.unwrap(), &mut (), &mut (), child_element);
+//         //         }
+//         //         child_element.request_update();
+//         //     }
+//         //     true
+//         // })
         
-        // if let Some(child) = self {
-        //     child.rebuild(cx, &prev.unwrap(), id, state, element)
-        // } else {
-        //     true
-        // }
-        true
-    }
+//         // if let Some(child) = self {
+//         //     child.rebuild(cx, &prev.unwrap(), id, state, element)
+//         // } else {
+//         //     true
+//         // }
+//         true
+//     }
 
-    fn event(
-        &self,
-        id_path: &[Id],
-        state: &mut Self::State,
-        event: Box<dyn Any>,
-        app_state: &mut T,
-    ) -> EventResult<A> {
-        // if let Some(child) = self {
-        //     let tl = &id_path[1..];
-        //     child.event(tl, &mut child::State, event, app_state)
-        // } else {
-        //     EventResult::Stale
-        // }
-        EventResult::Stale
-    }
-}
+//     fn event(
+//         &self,
+//         id_path: &[Id],
+//         state: &mut Self::State,
+//         event: Box<dyn Any>,
+//         app_state: &mut T,
+//     ) -> EventResult<A> {
+//         // if let Some(child) = self {
+//         //     let tl = &id_path[1..];
+//         //     child.event(tl, &mut child::State, event, app_state)
+//         // } else {
+//         //     EventResult::Stale
+//         // }
+//         EventResult::Stale
+//     }
+// }
