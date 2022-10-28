@@ -144,6 +144,8 @@ impl<T, A> View<T, A> for Box<dyn AnyView<T, A>> {
     }
 }
 
-pub fn any<T: 'static>(child: impl View<T> + 'static) -> Box<dyn AnyView<T> + Send + 'static> {
+pub fn any<T: 'static>(
+    child: impl View<T> + std::marker::Send + 'static,
+) -> Box<dyn AnyView<T> + Send + 'static> {
     Box::new(child)
 }

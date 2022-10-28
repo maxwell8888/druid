@@ -30,7 +30,7 @@ use super::{Cx, View};
 pub struct HStack<T, A, VT: ViewSequence<T, A>> {
     children: VT,
     cross_axis_alignment: SingleAlignment,
-    phantom: PhantomData<fn() -> (T, A)>,
+    phantom: PhantomData<(T, A)>,
 }
 
 pub fn h_stack<T, A, VT: ViewSequence<T, A>>(children: VT) -> HStack<T, A, VT> {

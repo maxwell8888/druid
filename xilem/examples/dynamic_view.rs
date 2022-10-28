@@ -20,7 +20,7 @@ fn count_button(count: u32) -> impl View<u32> {
     button(format!("count: {}", count), |data| *data += 1)
 }
 
-fn optional_content(data: &mut AppData) -> Box<dyn AnyView<AppData> + Send + 'static> {
+fn optional_content(data: &mut AppData) -> Box<dyn AnyView<AppData> + 'static> {
     if data.count > 5 {
         return Box::new(format!("biiig count: {}", data.count));
     } else {
@@ -33,7 +33,7 @@ fn optional_content(data: &mut AppData) -> Box<dyn AnyView<AppData> + Send + 'st
 }
 
 // fn app_logic(data: &mut AppData) -> impl View<AppData> {
-fn app_logic(data: &mut AppData) -> Box<dyn AnyView<AppData> + Send + 'static> {
+fn app_logic(data: &mut AppData) -> Box<dyn AnyView<AppData> + 'static> {
     let all = h_stack((
         format!("text: {}", data.doubleyous),
         format!("count: {}", data.count),
