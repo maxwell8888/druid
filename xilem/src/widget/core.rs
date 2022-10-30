@@ -52,6 +52,7 @@ bitflags! {
 }
 
 /// A pod that contains a widget (in a container).
+/// The widget is `AnyWidget` and the pod implements all the same named methods as in `Widget` but actually creates all the different contexts and then uses these to call the equivalent actual `Widget` methods for the `Pod`s widget.
 pub struct Pod {
     pub(crate) state: WidgetState,
     pub(crate) widget: Box<dyn AnyWidget>,
@@ -141,6 +142,14 @@ impl Pod {
         let mut modified_event = None;
         let had_active = self.state.flags.contains(PodFlags::HAS_ACTIVE);
         let recurse = match event {
+            RawEvent::KeyDown(key_event) => {
+                modified_event = Some(RawEvent::KeyDown(key_event.clone()));
+                true
+            }
+            RawEvent::KeyUp(key_event) => {
+                modified_event = Some(RawEvent::KeyUp(key_event.clone()));
+                true
+            }
             RawEvent::MouseDown(mouse_event) => {
                 Pod::set_hot_state(
                     &mut self.widget,
@@ -150,6 +159,7 @@ impl Pod {
                     Some(mouse_event.pos),
                 );
                 if had_active || self.state.flags.contains(PodFlags::IS_HOT) {
+                    // adjust moust_event.pos to be relative to widget not window
                     let mut mouse_event = mouse_event.clone();
                     mouse_event.pos -= self.state.origin.to_vec2();
                     modified_event = Some(RawEvent::MouseDown(mouse_event));
@@ -321,7 +331,7 @@ impl Pod {
     pub fn height_flexibility(&self) -> f64 {
         self.state.max_size.height - self.state.min_size.height
     }
-    
+
     pub fn width_flexibility(&self) -> f64 {
         self.state.max_size.width - self.state.min_size.width
     }

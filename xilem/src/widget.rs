@@ -197,20 +197,20 @@ macro_rules! impl_widget_tuple {
     }
 }
 
-// impl<W0: AnyWidget, W1: AnyWidget> WidgetTuple for (W0, W1) {
-//     fn length(&self) -> usize {
-//         1
-//     }
-
-//     fn widgets_mut(&mut self) -> Vec<&mut dyn AnyWidget> {
-//         let mut v: Vec<&mut dyn AnyWidget> = Vec::with_capacity(self.length());
-//         v.push(&mut self.0);
-//         v
-//     }
-// }
 
 impl_widget_tuple!(1; W0; 0);
-impl_widget_tuple!(2; W0, W1; 0, 1);
+// impl_widget_tuple!(2; W0, W1; 0, 1);
+impl<W0: AnyWidget, W1: AnyWidget> WidgetTuple for (W0, W1) {
+    fn length(&self) -> usize {
+        1
+    }
+
+    fn widgets_mut(&mut self) -> Vec<&mut dyn AnyWidget> {
+        let mut v: Vec<&mut dyn AnyWidget> = Vec::with_capacity(self.length());
+        v.push(&mut self.0);
+        v
+    }
+}
 impl_widget_tuple!(3; W0, W1, W2; 0, 1, 2);
 impl_widget_tuple!(4; W0, W1, W2, W3; 0, 1, 2, 3);
 impl_widget_tuple!(5; W0, W1, W2, W3, W4; 0, 1, 2, 3, 4);

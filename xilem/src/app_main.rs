@@ -15,11 +15,13 @@
 use std::any::Any;
 
 use druid_shell::{
-    kurbo::Size, Application, Cursor, HotKey, Menu, MouseEvent, Region, SysMods, WinHandler,
-    WindowBuilder, WindowHandle,
+    kurbo::Size, Application, Cursor, HotKey, KeyEvent, Menu, MouseEvent, Region, SysMods,
+    WinHandler, WindowBuilder, WindowHandle,
 };
 
 use crate::{app::App, widget::RawEvent, View, Widget};
+
+const QUIT_MENU_ID: u32 = 0x100;
 
 // This is a bit of a hack just to get a window launched. The real version
 // would deal with multiple windows and have other ways to configure things.
@@ -27,17 +29,6 @@ pub struct AppLauncher<T, V: View<T>, F: FnMut(&mut T) -> V> {
     title: String,
     app: App<T, V, F>,
 }
-
-// The logic of this struct is mostly parallel to DruidHandler in win_handler.rs.
-struct MainState<T, V: View<T>, F: FnMut(&mut T) -> V>
-where
-    V::Element: Widget,
-{
-    handle: WindowHandle,
-    app: App<T, V, F>,
-}
-
-const QUIT_MENU_ID: u32 = 0x100;
 
 impl<T: 'static, V: View<T> + 'static, F: FnMut(&mut T) -> V + 'static> AppLauncher<T, V, F> {
     pub fn new(app: App<T, V, F>) -> Self {
@@ -52,7 +43,9 @@ impl<T: 'static, V: View<T> + 'static, F: FnMut(&mut T) -> V + 'static> AppLaunc
         self
     }
 
+    // this is entirely using druid_shell types, apart from MainState which impls WinHandler, takes self.app and is passed to the window builder
     pub fn run(self) {
+        // make file menus
         let mut file_menu = Menu::new();
         file_menu.add_item(
             QUIT_MENU_ID,
@@ -64,8 +57,15 @@ impl<T: 'static, V: View<T> + 'static, F: FnMut(&mut T) -> V + 'static> AppLaunc
         let mut menubar = Menu::new();
         menubar.add_dropdown(Menu::new(), "Application", true);
         menubar.add_dropdown(file_menu, "&File", true);
-        let druid_app = Application::new().unwrap();
-        let mut builder = WindowBuilder::new(druid_app.clone());
+
+        // build backend application
+
+        // wrapper around backend::Application with a State which is just running: bool
+        let druid_app = druid_shell::Application::new().unwrap();
+        // WindowBuilder is simply a wrapper around backend:WindowBuild(backend::Application)
+        let mut builder = druid_shell::WindowBuilder::new(druid_app.clone());
+
+        // MainState implements WinHandler
         let main_state = MainState::new(self.app);
         builder.set_handler(Box::new(main_state));
         builder.set_title(self.title);
@@ -76,6 +76,28 @@ impl<T: 'static, V: View<T> + 'static, F: FnMut(&mut T) -> V + 'static> AppLaunc
     }
 }
 
+// The logic of this struct is mostly parallel to DruidHandler in win_handler.rs.
+struct MainState<T, V: View<T>, F: FnMut(&mut T) -> V>
+where
+    V::Element: Widget,
+{
+    handle: WindowHandle,
+    app: App<T, V, F>,
+}
+
+impl<T, V: View<T>, F: FnMut(&mut T) -> V> MainState<T, V, F>
+where
+    V::Element: Widget,
+{
+    fn new(app: App<T, V, F>) -> Self {
+        let state = MainState {
+            handle: Default::default(),
+            app,
+        };
+        state
+    }
+}
+
 impl<T: 'static, V: View<T> + 'static, F: FnMut(&mut T) -> V + 'static> WinHandler
     for MainState<T, V, F>
 where
@@ -83,6 +105,7 @@ where
 {
     fn connect(&mut self, handle: &WindowHandle) {
         self.handle = handle.clone();
+        // sets app.window_handle
         self.app.connect(handle.clone());
     }
 
@@ -100,6 +123,17 @@ where
             }
             _ => println!("unexpected id {}", id),
         }
+    }
+
+    fn key_down(&mut self, event: KeyEvent) -> bool {
+        self.app.window_event(RawEvent::KeyDown(event.into()));
+        self.handle.invalidate();
+        false
+    }
+
+    fn key_up(&mut self, event: KeyEvent) {
+        self.app.window_event(RawEvent::KeyUp(event.into()));
+        self.handle.invalidate();
     }
 
     fn mouse_down(&mut self, event: &MouseEvent) {
@@ -137,18 +171,5 @@ where
 
     fn as_any(&mut self) -> &mut dyn Any {
         self
-    }
-}
-
-impl<T, V: View<T>, F: FnMut(&mut T) -> V> MainState<T, V, F>
-where
-    V::Element: Widget,
-{
-    fn new(app: App<T, V, F>) -> Self {
-        let state = MainState {
-            handle: Default::default(),
-            app,
-        };
-        state
     }
 }

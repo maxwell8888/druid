@@ -1,6 +1,6 @@
 use druid_shell::{
     kurbo::{Point, Vec2},
-    Modifiers, MouseButton, MouseButtons,
+    Code, KbKey, KeyState, Location, Modifiers, MouseButton, MouseButtons,
 };
 
 // Copyright 2022 The Druid Authors.
@@ -19,6 +19,8 @@ use druid_shell::{
 
 #[derive(Debug, Clone)]
 pub enum RawEvent {
+    KeyDown(KeyEvent),
+    KeyUp(KeyEvent),
     MouseDown(MouseEvent),
     MouseUp(MouseEvent),
     MouseMove(MouseEvent),
@@ -37,6 +39,17 @@ pub struct MouseEvent {
     pub focus: bool,
     pub button: MouseButton,
     pub wheel_delta: Vec2,
+}
+
+#[derive(Clone, Debug)]
+pub struct KeyEvent {
+    pub state: KeyState,
+    pub key: KbKey,
+    pub code: Code,
+    pub location: Location,
+    pub mods: Modifiers,
+    pub repeat: bool,
+    pub is_composing: bool,
 }
 
 #[derive(Debug)]
@@ -64,6 +77,30 @@ impl<'a> From<&'a druid_shell::MouseEvent> for MouseEvent {
             focus: *focus,
             button: *button,
             wheel_delta: *wheel_delta,
+        }
+    }
+}
+
+impl From<druid_shell::KeyEvent> for KeyEvent {
+    fn from(src: druid_shell::KeyEvent) -> KeyEvent {
+        let druid_shell::KeyEvent {
+            state,
+            key,
+            code,
+            location,
+            mods,
+            repeat,
+            is_composing,
+            ..
+        } = src;
+        KeyEvent {
+            state,
+            key,
+            code,
+            location,
+            mods,
+            repeat,
+            is_composing,
         }
     }
 }

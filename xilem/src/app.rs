@@ -65,10 +65,10 @@ where
         if self.view.is_none() {
             let view = (self.app_logic)(&mut self.data);
             let (id, state, element) = view.build(&mut self.cx);
-            let root_pod = Pod::new(element);
             self.view = Some(view);
             self.id = Some(id);
             self.state = Some(state);
+            let root_pod = Pod::new(element);
             self.root_pod = Some(root_pod);
         }
     }
@@ -83,6 +83,8 @@ where
         self.size = size;
     }
 
+    /// Creates contexts and uses them to call `Widget`-like methods on the root `Pod`
+    /// at certain points runs self.app_logic() if there is events, then `continue`s to next iteration
     pub fn paint(&mut self, piet: &mut Piet) {
         let rect = self.size.to_rect();
         piet.fill(rect, &BG_COLOR);

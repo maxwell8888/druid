@@ -88,6 +88,7 @@ pub trait View<T, A = ()> {
 }
 
 #[derive(Clone)]
+/// This is just a wrapper around IdPath which is just a Vec of integers, and reimplements some Vec methods
 pub struct Cx {
     id_path: IdPath,
 }
