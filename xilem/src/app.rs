@@ -85,6 +85,7 @@ where
 
     /// Creates contexts and uses them to call `Widget`-like methods on the root `Pod`
     /// at certain points runs self.app_logic() if there is events, then `continue`s to next iteration
+    /// I believe this is only run once when the app is launched
     pub fn paint(&mut self, piet: &mut Piet) {
         let rect = self.size.to_rect();
         piet.fill(rect, &BG_COLOR);

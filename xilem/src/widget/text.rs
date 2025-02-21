@@ -59,6 +59,7 @@ impl Widget for TextWidget {
     fn update(&mut self, cx: &mut UpdateCx) {
         // All changes potentially require layout. Note: we could be finer
         // grained, maybe color changes wouldn't.
+        // dbg!("text update");
         cx.request_layout();
     }
 

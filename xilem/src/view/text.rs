@@ -117,3 +117,41 @@ impl<T, A> View<T, A> for String {
         EventResult::Stale
     }
 }
+
+impl<T, A> View<T, A> for str {
+    type State = ();
+
+    type Element = crate::widget::text::TextWidget;
+
+    fn build(&self, cx: &mut Cx) -> (Id, Self::State, Self::Element) {
+        let (id, element) =
+            cx.with_new_id(|_| crate::widget::text::TextWidget::new(self.to_owned()));
+        (id, (), element)
+    }
+
+    fn rebuild(
+        &self,
+        _cx: &mut Cx,
+        prev: &Self,
+        _id: &mut crate::id::Id,
+        _state: &mut Self::State,
+        element: &mut Self::Element,
+    ) -> bool {
+        if prev != self {
+            element.set_text(self.to_owned());
+            true
+        } else {
+            false
+        }
+    }
+
+    fn event(
+        &self,
+        _id_path: &[crate::id::Id],
+        _state: &mut Self::State,
+        _event: Box<dyn Any>,
+        _app_state: &mut T,
+    ) -> EventResult<A> {
+        EventResult::Stale
+    }
+}

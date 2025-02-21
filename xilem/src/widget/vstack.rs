@@ -54,6 +54,7 @@ impl Widget for VStack {
     }
 
     fn update(&mut self, cx: &mut UpdateCx) {
+        dbg!("vstack update: {}", self.children.len());
         for child in &mut self.children {
             child.update(cx);
         }

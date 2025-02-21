@@ -18,7 +18,7 @@ use crate::{
     event::EventResult,
     id::Id,
     view_seq::ViewSequence,
-    widget::{align::SingleAlignment, WidgetTuple},
+    widget::{align::SingleAlignment, WidgetTuple, WidgetVec},
     Center, HorizAlignment,
 };
 
@@ -27,10 +27,10 @@ use super::{Cx, View};
 pub struct Column<T, A, VT: ViewSequence<T, A>> {
     children: VT,
     cross_axis_alignment: SingleAlignment,
-    phantom: PhantomData<fn() -> (T, A)>,
+    phantom: PhantomData<(T, A)>,
 }
 
-pub fn v_stack<T, A, VT: ViewSequence<T, A>>(children: VT) -> Column<T, A, VT> {
+pub fn column<T, A, VT: ViewSequence<T, A>>(children: VT) -> Column<T, A, VT> {
     Column::new(children)
 }
 
@@ -53,7 +53,7 @@ impl<T, A, VT: ViewSequence<T, A>> Column<T, A, VT> {
 
 impl<T, A, VT: ViewSequence<T, A>> View<T, A> for Column<T, A, VT>
 where
-    VT::Elements: WidgetTuple,
+    VT::Elements: WidgetVec,
 {
     type State = VT::State;
 
@@ -73,6 +73,8 @@ where
         state: &mut Self::State,
         element: &mut Self::Element,
     ) -> bool {
+        dbg!(format!("column view: {}", self.children.length()));
+        // dbg!(format!("state: {}", state:));
         cx.with_id(*id, |cx| {
             self.children
                 .rebuild(cx, &prev.children, state, element.children_mut())

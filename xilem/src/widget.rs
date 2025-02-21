@@ -197,7 +197,6 @@ macro_rules! impl_widget_tuple {
     }
 }
 
-
 impl_widget_tuple!(1; W0; 0);
 // impl_widget_tuple!(2; W0, W1; 0, 1);
 impl<W0: AnyWidget, W1: AnyWidget> WidgetTuple for (W0, W1) {
@@ -208,6 +207,8 @@ impl<W0: AnyWidget, W1: AnyWidget> WidgetTuple for (W0, W1) {
     fn widgets_mut(&mut self) -> Vec<&mut dyn AnyWidget> {
         let mut v: Vec<&mut dyn AnyWidget> = Vec::with_capacity(self.length());
         v.push(&mut self.0);
+        // I had previously missed out this second push but eveything still seemed to work, would be interesting to investigate why
+        v.push(&mut self.1);
         v
     }
 }
